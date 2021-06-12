@@ -17,21 +17,9 @@ namespace Agend
             // Código que se ejecuta al iniciar la aplicación
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            List<Entity.Contact> lstContactExemple = new List<Entity.Contact>();
-            for (int i = 1; i < 11; i++)
-            {
-                lstContactExemple.Add
-                (
-                    new Entity.Contact
-                    {
-                        id = i,
-                        name = string.Concat("Name", i.ToString()),
-                        email = string.Concat("Email", i.ToString())
-                    }
-                );
+      
             }
 
-            Application["lstExample"] = lstContactExemple;
-        }
+
     }
 }

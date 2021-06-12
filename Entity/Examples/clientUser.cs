@@ -4,14 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity
+namespace Entity.Examples
 {
-   public class ContactFilter
+    class clientUser
     {
-        public string name { get; set; }
+        public int? idClient { get; set; }
+
+
         public string email { get; set; }
 
-        public string cel { get; set; }
+
+        public string pass { get; set; }
+
+
+
+
+
 
     }
 }

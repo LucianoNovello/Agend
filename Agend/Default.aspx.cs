@@ -16,7 +16,7 @@ namespace Agend
             {
                 foreach (Entity.Contact example in listado)
                 {
-                    Response.Write(string.Concat("Id: ", example.id.ToString(), " Name: ", example.name));
+                    Response.Write(string.Concat("Id: ", example.id.ToString(), " Name: ", example.name, "Email:", example.email));
                     Response.Write("<BR/>");
                 }
             }
