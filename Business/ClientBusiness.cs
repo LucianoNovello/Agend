@@ -1,15 +1,15 @@
 ﻿
-using Entity;
+using Entity.Examples;
 using System.Collections.Generic;
 
 namespace Business
 {
-    public interface IBusiness
+    public interface ClientBusiness
     {
 
                    
        Contact GetContactByID(Contact example);
-        List<Contact> GetListContactByFilter(ContactFilter exampleFilter);
+       /* List<Contact> GetListContactByFilter(ContactFilter exampleFilter);*/
         Contact Insert(Contact example);
         void Update(Contact example);
         void Delete(Contact example);

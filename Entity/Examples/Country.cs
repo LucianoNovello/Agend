@@ -9,13 +9,13 @@ namespace Entity.Examples
     class Country
     {
 
-        public int? idCountry { get; set; }
+        public int? IdCountry { get; set; }
 
-        public string countryName { get; set; }
+        public string CountryName { get; set; }
 
 
 
-        public string abbrevation { get; set; }
+        public string Abbrevation { get; set; }
 
 
 

@@ -3,48 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entity.Examples;
 
 
-namespace Entity
+namespace Entity.Examples
+
 
 {
-    [Serializable]
+   
     public class Contact
 
     {
 
-        public int? id { get; set; }
-        public string firstName { get; set; }
+        public int? Id { get; set; }
+        public string FirstName { get; set; }
 
-        public string secondName { get; set; }
+        public string SecondName { get; set; }
          
-        public char gen { get; set; }
+        public char Gen { get; set; }
 
-        public string email { get; set; }
+        public string Email { get; set; }
 
-        public string cel { get; set; }
+        public string Cel { get; set; }
 
-        public int country { get; set; }
+        public int Country { get; set; }
 
-        public string city { get; set; }
+        public string City { get; set; }
 
-        public Boolean intern { get; set; }
-
-
-        public int org {get;set;}
+        public bool Intern { get; set; }
 
 
-        public int area { get; set; }
+        public int Org {get;set;}
 
-        public DateTime dateAdmission { get; set; }
 
-        public Boolean active { get; set; }
+        public int Area { get; set; }
+
+        public DateTime DateAdmission { get; set; }
+
+        public Boolean Active { get; set; }
         
-        public string direction { get; set; }        
+        public string Direction { get; set; }        
         
-        public string phone { get; set; }
+        public string Phone { get; set; }
 
-        public string skype { get; set; }
+        public string Skype { get; set; }
 
 
     }

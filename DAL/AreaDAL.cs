@@ -4,17 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Examples
+namespace DAL
 {
-    class Org
+    class AreaDAL
     {
-        public int? IdOrg { get; set; }
-
-        public string OrgName { get; set; }
-
-
-
-
-
     }
 }

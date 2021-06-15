@@ -4,17 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Examples
+namespace Business
 {
-    class Org
+    class AreaBusiness
     {
-        public int? IdOrg { get; set; }
-
-        public string OrgName { get; set; }
-
-
-
-
-
     }
 }

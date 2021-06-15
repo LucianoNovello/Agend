@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Utils
+namespace DAL
 {
-    public class LogHelper
+    class ClientUserDAL
     {
     }
 }

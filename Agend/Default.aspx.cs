@@ -6,13 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business;
 using System;
+using Entity.Examples;
 
 namespace Agend
 {
     public partial class _Default : Page
     {
      
-            private void print(List<Entity.Contact> listado)
+            private void print(List<Entity.Examples.Contact> listado)
             {
                 foreach (Entity.Contact example in listado)
                 {
@@ -24,7 +25,7 @@ namespace Agend
             protected void Page_Load(object sender, EventArgs e)
             {
                 //Instancio mi business
-                IBusiness business = new MemoryBusiness((List<Entity.Contact>)Application["lstExample"]);
+                ClientBusiness business = new ContactBusiness((List<Entity.Contact>)Application["lstExample"]);
 
                 Response.Write("Obtengo el registro con Id = 3 y lo imprimo en pantalla:");
                 Response.Write("<BR/>");
