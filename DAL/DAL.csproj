@@ -42,14 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientUserDAL.cs" />
+    <Compile Include="DataSetCustom.cs" />
+    <Compile Include="DataAdapterCustom.cs" />
     <Compile Include="CountryDAL.cs" />
-    <Compile Include="OrgDAL.cs" />
-    <Compile Include="AreaDAL.cs" />
     <Compile Include="ContactDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{54B0DF21-56FF-456C-AD30-A8899283205D}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{3D680213-0458-483A-8C7D-1709243FDC9C}</Project>
       <Name>Utils</Name>

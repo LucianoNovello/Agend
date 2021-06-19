@@ -41,10 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Examples\Org.cs" />
+    <Compile Include="Examples\PaginateProperties.cs" />
     <Compile Include="Examples\Country.cs" />
-    <Compile Include="Examples\clientUser.cs" />
-    <Compile Include="Examples\Area.cs" />
+    <Compile Include="Examples\ContactFilter.cs" />
     <Compile Include="Examples\Contact.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

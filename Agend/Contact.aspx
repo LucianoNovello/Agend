@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ListContact.aspx.cs" Inherits="Agend.ListContact" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="Agend.InsertContact" %>
 
 <!DOCTYPE html>
 
@@ -8,7 +8,7 @@
     <title></title>
 </head>
 <body>
-    <form id="form1" runat="server" style="background-color: #f1f1f1" >
+     <form id="form1" runat="server" style="background-color: #f1f1f1" >
         <div id="DivContact" runat="server">
 
             <asp:Label ID="Contact" runat="server" Text="Contact" CssClass="Titulo"></asp:Label>
@@ -40,18 +40,11 @@
                 </tr>
                 
                 <tr> 
-
-
-                    <td>
-                        <asp:Button ID="editContact" runat="server" Text="Guardar" OnClick="ContactEdit" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
-                    </td>
-
-                    <td>
-                        <asp:Button ID="insertContact" runat="server" Text="Guardar" OnClick="ContactInsert" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
-                    </td>
-                     
                      <td>
-                        <asp:Button ID="filterContact" runat="server" Text="Guardar" OnClick="ContactFilter" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
+                        <asp:Button ID="insertContact" runat="server" Text="Guardar" OnClick="saveContact" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
+                    </td>
+                    <td>
+                        <asp:Button ID="editContact" runat="server" Text="Guardar" OnClick="editContact" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
                     </td>
                 </tr>
             </table>

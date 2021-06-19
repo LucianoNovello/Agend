@@ -11,7 +11,7 @@ namespace Agend
 {
 
 
-    public partial class ListContact
+    public partial class InsertContact
     {
 
         /// <summary>
@@ -105,15 +105,6 @@ namespace Agend
         protected global::System.Web.UI.WebControls.TextBox txtTelefono;
 
         /// <summary>
-        /// Control editContact.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button editContact;
-
-        /// <summary>
         /// Control insertContact.
         /// </summary>
         /// <remarks>
@@ -123,12 +114,12 @@ namespace Agend
         protected global::System.Web.UI.WebControls.Button insertContact;
 
         /// <summary>
-        /// Control filterContact.
+        /// Control editContact.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button filterContact;
+        protected global::System.Web.UI.WebControls.Button editContact;
     }
 }

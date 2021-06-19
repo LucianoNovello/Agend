@@ -41,11 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AreaBusiness.cs" />
-    <Compile Include="OrgBusiness.cs" />
     <Compile Include="CountryBusiness.cs" />
     <Compile Include="ContactBusiness.cs" />
-    <Compile Include="ClientBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

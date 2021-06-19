@@ -30,13 +30,13 @@ namespace Entity.Examples
 
         public string City { get; set; }
 
-        public bool Intern { get; set; }
+        public int Intern { get; set; }
 
 
-        public int Org {get;set;}
+        public string Org {get;set;}
 
 
-        public int Area { get; set; }
+        public string Area { get; set; }
 
         public DateTime DateAdmission { get; set; }
 

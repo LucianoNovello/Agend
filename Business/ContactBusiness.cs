@@ -7,39 +7,38 @@ using Entity.Examples;
 using DAL;
 using System.Data.SqlClient;
 using Utils;
-
+using System.Data;
 
 namespace Business
 {
     public class ContactBusiness :  IDisposable
     {
-        private List<Contact> lstContact;
+        
 
         public void Dispose()
         {
+
         }
 
-        public ContactBusiness(List<Contact> lstContact)
+        public DataSet SelectAllContact()
         {
-            this.lstContact = lstContact;
-        }
-
-      /*  public Contact GetContactByID(Contact Contact)
-        {
-            return this.lstContact.Single(p => p.id.Equals(Contact.id));
-        }
-
-       /* public List<Contact> GetListContactByFilter(ContactFilter ContactFilter)
-        {
-            if (!string.IsNullOrEmpty(ContactFilter.name))
+            try
             {
-                return this.lstContact.FindAll( p => p.name.Contains(ContactFilter.name)).OrderBy(p => p.id).ToList();
+                using ( ContactDAL dal = new ContactDAL())
+                {
+                    var connection = dal.OpenConnection();
+                    DataSetCustom ds = new DataSetCustom(connection);
+                    DataSet dsa = ds.GetContacts();
+                    return dsa;
+                }
             }
-            else
+            catch (Exception e)
             {
-                return this.lstContact.OrderBy(p => p.id).ToList();
+                ExceptionPrint.Print(e);
+                return null;
             }
-        }*/
+        }
+
 
         public void InsertContact(Contact C)
         {
@@ -50,27 +49,7 @@ namespace Business
 
                 try
                 {
-
-
-                   string firstName = C.FirstName;
-                   string secondName = C.SecondName;
-                   bool intern = C.Intern;
-                   int org = C.Org;
-                   string phone = C.Phone;
-                   string skype = C.Skype;
-                   char gen =   C.Gen;
-                   string direction = C.Direction;
-                   string city = C.City;
-                   int area =  C.Area;
-                   DateTime admission = C.DateAdmission;
-                   int country = C.Country;
-                   string cel =  C.Cel;
-                   bool active = C.Active;
-                  
-
-                    dal.ExecuteTransaction(transaction, connection, "EXEC insertContact 'firstName, secondName, gen, country, city, intern, org, area, admission, active, direction, phone, cel, email, skype'");
-                   
-
+                    dal.ExecuteTransaction(transaction, connection, C);
                     transaction.Commit();
                 }
                 catch (Exception e)
@@ -94,7 +73,8 @@ namespace Business
 
                 try
                 {
-                    dal.ExecuteTransaction(transaction, connection, "");
+                    
+                    dal.ExecuteTransactionU(transaction, connection, C);
 
 
                     transaction.Commit();
@@ -120,7 +100,7 @@ namespace Business
 
                 try
                 {
-                    dal.ExecuteTransaction(transaction, connection, "");
+                    dal.ExecuteTransactionD(transaction, connection, "");
 
 
                     transaction.Commit();
@@ -136,6 +116,66 @@ namespace Business
                 }
             }
         }
+        public List<Contact> GetContactByFilter(ContactFilter filter)
+        {
+            try
+            {
+                using (ContactDAL dal = new ContactDAL())
+                {
+                    var connection = dal.OpenConnection();
+                    DataSet ds = dal.GetContactByFilter(connection, filter);
+                    return MapDataSetToContacts(ds);
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionPrint.Print(e);
+                return null;
+            }
+        }
+
+        private List<Contact> MapDataSetToContacts(DataSet ds)
+        {
+            List<Contact> list = new List<Contact>();
+
+            if (DataSetHelper.HasRecords(ds))
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    list.Add(MapDataRowToContact(row));
+                }
+                return list;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private static Contact MapDataRowToContact(DataRow row)
+        {
+            return new Contact
+            {
+                FirstName = Convert.ToString(row["firstName"]),
+                SecondName = Convert.ToString(row["secondName"]),
+                DateAdmission = Convert.ToDateTime(row["dateAdmission"]),
+                Gen =  Convert.ToChar(row["gen"]),
+                Email = Convert.ToString(row["email"]),
+                Cel = Convert.ToString(row["cel"]),
+                Country = Convert.ToInt32(row["idCountry"]),
+                City = Convert.ToString(row["city"]),
+                Intern = Convert.ToInt32(row["cIntern"]),
+                Org = Convert.ToString(row["org"]),
+                Area = Convert.ToString(row["area"]),
+                Active = Convert.ToBoolean(row["active"]),
+                Direction= Convert.ToString(row["direction"]),
+                Phone = Convert.ToString(row["phone"]),
+                Skype= Convert.ToString(row["skype"])
+                
+
+            };
+        }
+
         public void OpenConnection()
         {
             try
