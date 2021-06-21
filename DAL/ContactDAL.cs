@@ -28,7 +28,6 @@ namespace DAL
             try
             {
                 connection.Open();
-                Console.WriteLine("Esto se debería leer entre que abro y cierro la conexión a BD");
                 return connection;
             }
             catch (Exception e)
@@ -39,7 +38,7 @@ namespace DAL
             }
         }
 
-        public int ExecuteTransaction(SqlTransaction transaction, SqlConnection connection, Contact C)
+  public int ExecuteTransactionI(SqlTransaction transaction, SqlConnection connection, Contact C)
         {
             SqlCommand cmd = new SqlCommand
             {
@@ -48,12 +47,12 @@ namespace DAL
                 CommandType = CommandType.StoredProcedure,
                 CommandText = "insertContact"
             };
-            Parameters(C, cmd);
+            ParametersI(C, cmd);
             int registrosAfectados = cmd.ExecuteNonQuery();
             return registrosAfectados;
         }
 
-        private static void Parameters(Contact C, SqlCommand cmd)
+        private static void ParametersI(Contact C, SqlCommand cmd)
         {
             cmd.Parameters.Add(new SqlParameter[]
 
@@ -90,9 +89,145 @@ namespace DAL
 
                     });
         }
+        public SqlDataReader GetContactById(SqlConnection connection, int id)
+        {
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = connection,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "GetContactById"
+            };
 
- 
-        public DataSet GetContactByFilter(SqlConnection connection, ContactFilter filter)
+            cmd.Parameters.AddRange(new SqlParameter[]
+            {
+                new SqlParameter() { ParameterName = "@id",  Value = id,      SqlDbType = SqlDbType.Int }
+            });
+
+            SqlDataReader result = cmd.ExecuteReader();
+
+            return result;
+        }
+        public int ExecuteTransactionU(SqlTransaction transaction, SqlConnection connection, Contact editContact)
+              {
+                  SqlCommand cmd = new SqlCommand
+                  {
+                      Connection = transaction != null ? transaction.Connection : connection,
+                      Transaction = transaction,
+                      CommandType = CommandType.StoredProcedure,
+                      CommandText = "updateContact"
+                  };
+                  ParametersU(editContact, cmd);
+                  int registrosAfectados = cmd.ExecuteNonQuery();
+                  return registrosAfectados;
+              }
+
+              private static void ParametersU(Contact C, SqlCommand cmd)
+              {
+                  cmd.Parameters.Add(new SqlParameter[]
+
+                          {
+
+
+                      new SqlParameter() { ParameterName = "@firstName", Value = C.FirstName, SqlDbType = SqlDbType.VarChar },
+
+                      new SqlParameter() { ParameterName = "@secondName", Value = C.SecondName, SqlDbType = SqlDbType.VarChar },
+
+                      new SqlParameter() { ParameterName = "@gen", Value = C.Gen, SqlDbType = SqlDbType.Char },
+
+                      new SqlParameter() { ParameterName = "@country", Value = C.Country, SqlDbType = SqlDbType.Int },
+
+                      new SqlParameter() { ParameterName = "@city", Value = C.City, SqlDbType = SqlDbType.VarChar },
+
+                      new SqlParameter() { ParameterName = "@cIntern", Value = C.Intern, SqlDbType = SqlDbType.Int },
+
+                      new SqlParameter() { ParameterName = "@org", Value = C.Org, SqlDbType = SqlDbType.VarChar },
+
+                      new SqlParameter() { ParameterName = "@area", Value = C.Area, SqlDbType = SqlDbType.VarChar },
+
+                      new SqlParameter() { ParameterName = "@date", Value = C.DateAdmission, SqlDbType = SqlDbType.DateTime },
+
+                      new SqlParameter() { ParameterName = "@active", Value = C.Active, SqlDbType = SqlDbType.Bit },
+
+                      new SqlParameter() { ParameterName = "@phone", Value = C.Direction, SqlDbType = SqlDbType.VarChar},
+
+                      new SqlParameter() { ParameterName = "@email", Value = C.Org, SqlDbType = SqlDbType.VarChar },
+
+                      new SqlParameter() { ParameterName = "@skype", Value = C.Org, SqlDbType = SqlDbType.VarChar }
+
+
+
+                          });
+              }
+
+        public int ExecuteTransactionD(SqlTransaction transaction, SqlConnection connection, Contact editContact)
+        {
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = transaction != null ? transaction.Connection : connection,
+                Transaction = transaction,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "deleteContact"
+            };
+            ParametersD(editContact, cmd);
+            int registrosAfectados = cmd.ExecuteNonQuery();
+            return registrosAfectados;
+        }
+
+        private static void ParametersD(Contact C, SqlCommand cmd)
+        {
+            cmd.Parameters.Add(new SqlParameter[]
+
+                    {
+
+
+                      new SqlParameter() { ParameterName = "@id", Value = C.Id, SqlDbType = SqlDbType.Int }
+
+                      
+
+
+
+                    });
+        }
+        public SqlDataReader GetContactByFilterV2(SqlConnection connection, ContactFilter filter)
+        {
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = connection,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "ContactByFilter"
+            };
+
+        cmd.Parameters.AddRange(new SqlParameter[]
+                        {
+
+                new SqlParameter() { ParameterName = "@firstName",     Value = filter.FirstName,      SqlDbType = SqlDbType.VarChar },
+
+                new SqlParameter() { ParameterName = "@secondName",   Value = filter.SecondName,    SqlDbType = SqlDbType.VarChar },
+
+                new SqlParameter() { ParameterName = "@idCountry",   Value = filter.Country,    SqlDbType = SqlDbType.Int },
+
+                new SqlParameter() { ParameterName = "@city",   Value = filter.City,    SqlDbType = SqlDbType.VarChar },
+
+                new SqlParameter() { ParameterName = "@cIntern",   Value = filter.CIntern,    SqlDbType = SqlDbType.Int },
+
+                new SqlParameter() { ParameterName = "@org",   Value = filter.Org,    SqlDbType = SqlDbType.VarChar },
+
+                new SqlParameter() { ParameterName = "@area",   Value = filter.Area,    SqlDbType = SqlDbType.VarChar },
+
+                new SqlParameter() { ParameterName = "@dateAdmission",   Value = filter.dateAdmission,    SqlDbType = SqlDbType.DateTime },
+
+                new SqlParameter() { ParameterName = "@active",   Value = filter.Active,    SqlDbType = SqlDbType.Bit},
+
+                
+              
+         
+        });
+            SqlDataReader result = cmd.ExecuteReader();
+
+            return result;
+        }
+
+        public DataSet GetContactsByFilter(SqlConnection connection, ContactFilter filter)
         {
             using (SqlDataAdapter adapter = new SqlDataAdapter())
             {
@@ -108,11 +243,12 @@ namespace DAL
                 return ds;
             }
         }
+
         private SqlCommand ConfigSelectCommand(SqlConnection connection, ContactFilter filter)
         {
             SqlCommand cmd = new SqlCommand
             {
-                CommandText = "selectContactbyFilter",
+                CommandText = "ContactByFilter",
                 CommandType = CommandType.StoredProcedure,
                 Connection = connection
             };
@@ -146,8 +282,6 @@ namespace DAL
             });
             return cmd;
         }
-
-
         public void Dispose()
         {
             if (connection.State == ConnectionState.Open)

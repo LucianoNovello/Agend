@@ -26,11 +26,11 @@ namespace Entity.Examples
 
         public string Cel { get; set; }
 
-        public int Country { get; set; }
+        public string Country { get; set; }
 
         public string City { get; set; }
 
-        public int Intern { get; set; }
+        public Boolean Intern { get; set; }
 
 
         public string Org {get;set;}
@@ -38,7 +38,7 @@ namespace Entity.Examples
 
         public string Area { get; set; }
 
-        public DateTime DateAdmission { get; set; }
+        public DateTime? DateAdmission { get; set; }
 
         public Boolean Active { get; set; }
         

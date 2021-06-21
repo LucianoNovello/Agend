@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entity.Examples;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -8,14 +9,16 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-   public class DataSetCustom 
+    public class DataSetCustom
     {
         private readonly SqlDataAdapter adapter;
-        private readonly SqlDataAdapter adapter2;
+   
 
         public DataSetCustom(SqlConnection connection)
         {
             DataAdapterCustom adapter = new DataAdapterCustom();
+            
+           
             this.adapter = adapter.GetAdapter(connection);
             
         }
@@ -27,11 +30,9 @@ namespace DAL
             adapter.Fill(contactsDS);
             return contactsDS;
         }
-        public DataSet GetCountry()
-        {
-            DataSet countryDs = new DataSet();
-            adapter.Fill(countryDs);
-            return countryDs;
-        }
+
+     
+
+       
     }
 }

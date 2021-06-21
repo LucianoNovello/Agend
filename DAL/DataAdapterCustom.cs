@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entity.Examples;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -25,11 +26,27 @@ namespace DAL
             {
                 Connection = connection,
                 CommandType = CommandType.Text,
-                CommandText = "SELECT * FROM contacts, countrys" 
+                CommandText = "SELECT * FROM [contacts]"
             };
         }
 
-     
-    }
+        public SqlDataAdapter GetAdapterCountrys(SqlConnection connection)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter
+            {
+                SelectCommand = ConfigSelectCommandCountrys(connection)
+            };
+            return adapter;
+        }
 
+        private SqlCommand ConfigSelectCommandCountrys(SqlConnection connection)
+        {
+            return new SqlCommand
+            {
+                Connection = connection,
+                CommandType = CommandType.Text,
+                CommandText = "SELECT * FROM [country]"
+            };
+        }
+    }
 }

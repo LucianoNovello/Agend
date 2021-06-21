@@ -14,10 +14,10 @@ namespace Entity.Examples
 
         public DateTime dateAdmission { get; set; }
 
-        public int CIntern { get; set; }
+        public bool CIntern { get; set; }
         public bool Active { get; set; }
 
-        public int Country { get; set; }
+        public string Country { get; set; }
 
         public string City { get; set; }
         public string Org { get; set; }

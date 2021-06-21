@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entity.Examples;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,7 +10,7 @@ using Utils;
 
 namespace DAL
 {
-    class CountryDAL
+    public class CountryDAL : IDisposable
     {
 
         public SqlConnection connection;
@@ -27,7 +28,6 @@ namespace DAL
             try
             {
                 connection.Open();
-                Console.WriteLine("Esto se debería leer entre que abro y cierro la conexión a BD");
                 return connection;
             }
             catch (Exception e)
@@ -37,8 +37,37 @@ namespace DAL
 
             }
         }
+        public SqlDataReader GetAllCountrys(SqlConnection connection)
+        {
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = connection,
+                CommandType = CommandType.Text,
+                CommandText = "Select*from [country]"
+            };
+            SqlDataReader result = cmd.ExecuteReader();
+            return result;
+        }
+        public SqlDataReader GetCountryByFilter(SqlConnection connection, int id)
+        {
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = connection,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "getCountryById"
+            };
 
-        public int ExecuteTransaction(SqlTransaction transaction, SqlConnection connection, string nonNonQwerySentence)
+            cmd.Parameters.AddRange(new SqlParameter[]
+            {
+                new SqlParameter() { ParameterName = "@id",  Value = id,      SqlDbType = SqlDbType.Int }
+            });
+
+            SqlDataReader result = cmd.ExecuteReader();
+
+            return result;
+        }
+    
+        public int ExecuteTransactionCI(SqlTransaction transaction, SqlConnection connection, string nonNonQwerySentence)
         {
             SqlCommand cmd = new SqlCommand
             {

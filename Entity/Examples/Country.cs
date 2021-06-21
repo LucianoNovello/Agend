@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Examples
 {
-    class Country
+    public class Country
     {
 
         public int? IdCountry { get; set; }
