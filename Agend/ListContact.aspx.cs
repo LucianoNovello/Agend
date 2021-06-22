@@ -125,9 +125,12 @@ namespace Agend
 
         }
 
+        protected void SearchContact(object sender, EventArgs e)
+        {
+            LoadGrid();
+        }
 
-
-        protected void DelectContact(object sender, GridViewDeleteEventArgs e)
+            protected void DelectContact(object sender, GridViewDeleteEventArgs e)
         {
             LoadGrid();
         }

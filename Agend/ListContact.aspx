@@ -34,7 +34,7 @@
                         <asp:TextBox ID="txtSecondName" runat="server"></asp:TextBox>
                     </td>
                 </tr>
-               <tr>
+                <tr>
                     <td>
                         <asp:Label ID="lblCountry" runat="server" Text="Pais: "></asp:Label>
                     </td>
@@ -119,7 +119,7 @@
                     <td>
                         <div>
 
-                            <asp:Button ID="filterContact" runat="server" Text="Buscar" OnClick="CleanFilter" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
+                            <asp:Button ID="filterContact" runat="server" Text="Buscar" OnClick="SearchContact" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
                         </div>
 
                     </td>
@@ -132,7 +132,7 @@
 
         </div>
         <p>
-       
+
             <asp:ImageButton ID="cleanFilter" ImageUrl="Img/fil.png" OnClick="CleanFilter" runat="server" AlternateText="Limpiar Filtro" />
 
         </p>
