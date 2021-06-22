@@ -119,7 +119,7 @@
                     <td>
                         <div>
 
-                            <asp:Button ID="filterContact" runat="server" Text="Buscar" OnClick="ContactFilter" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
+                            <asp:Button ID="filterContact" runat="server" Text="Buscar" OnClick="CleanFilter" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
                         </div>
 
                     </td>
@@ -158,8 +158,8 @@
                     <asp:BoundField DataField="cel" HeaderText="Celular" SortExpression="cel" />
                     <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" />
                     <asp:BoundField DataField="skype" HeaderText="Skype" SortExpression="skype" />
-                    <asp:ButtonField ButtonType="Button" CommandName="Edit" HeaderText="Editar" ShowHeader="True" Text="Edit" />
-                    <asp:ButtonField ButtonType="Button" CommandName="Delete" HeaderText="Borrar" ShowHeader="True" Text="Borrar" />
+                    <asp:ButtonField ButtonType="Button" Visible="false" CommandName="Edit" HeaderText="Editar" ShowHeader="False" Text="Edit" />
+                    <asp:ButtonField ButtonType="Button" Visible="false" CommandName="Delete" HeaderText="Borrar" ShowHeader="False" Text="Borrar" />
                 </Columns>
             </asp:GridView>
 

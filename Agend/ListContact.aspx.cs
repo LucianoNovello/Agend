@@ -105,9 +105,22 @@ namespace Agend
         protected void CleanFilter(object sender, EventArgs e)
         {
 
+            txtFirstName.Text = "";
+            txtSecondName.Text = "";
+            chkCintern.Checked = false;
+            txtOrg.Text = "";
+            txtArea.Text = "";
+            txtCity.Text = "";
+            ActiveCheck.Checked = false;
+            DropDownList1.SelectedIndex =-1;
+            DateTimeText.Text = "";
+            LoadGrid();
+
+
+
 
            
-            LoadGrid();
+           
            
 
         }
@@ -116,38 +129,14 @@ namespace Agend
 
         protected void DelectContact(object sender, GridViewDeleteEventArgs e)
         {
-            GridViewRow row = GridView1.SelectedRow;
-            int id = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Values["id"]);
-            ContactBusiness contact = new ContactBusiness();
-            contact.DeleteContact(id);
             LoadGrid();
-
-
         }
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             int n = e.RowIndex;
             
-            Contact newContact = new Contact
-            {
-
-                FirstName = txtFirstEditName.Text != " " ? txtFirstEditName.Text : null;
-                SecondName = txtSecondName.Text != "" ? txtSecondName.Text : null,
-                Gen = txtGen.Text != "" ? txtGen.Text : null,
-                Country = Convert.ToString(DropDownList1.SelectedIndex + 1),
-                Intern = test,
-                Org = txtOrg.Text != "" ? txtOrg.Text : null,
-                Area = txtArea.Text != "" ? txtArea.Text : null,
-                City = txtCity.Text != "" ? txtCity.Text : null,
-                Phone = txtPhone.Text != "" ? txtPhone.Text : null,
-                Cel = txtCel.Text != "" ? txtCel.Text : null,
-                Direction = txtDir.Text != "" ? txtDir.Text : null,
-                Email = txtEmail.Text != "" ? txtEmail.Text : null,
-                Skype = txtSkype.Text != "" ? txtSkype.Text : null,
-                Active = testA,
-                DateAdmission = admission,
-            };
+       
         }
     }
 }

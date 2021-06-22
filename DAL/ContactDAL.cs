@@ -115,7 +115,7 @@ namespace DAL
             cmd.Parameters.AddRange(new SqlParameter[]
             {
                  new SqlParameter() { ParameterName = "@Id", Value = id, SqlDbType = SqlDbType.Int },
-            }
+            });
             return cmd;
             }
 
