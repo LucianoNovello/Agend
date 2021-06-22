@@ -12,10 +12,10 @@ namespace Entity.Examples
 
         public string SecondName { get; set; }
 
-        public DateTime dateAdmission { get; set; }
+        public DateTime? dateAdmission { get; set; }
 
-        public bool CIntern { get; set; }
-        public bool Active { get; set; }
+        public int? CIntern { get; set; }
+        public int? Active { get; set; }
 
         public string Country { get; set; }
 

@@ -35,7 +35,7 @@
                         <asp:Label ID="Label1" runat="server" Text="Gen: "></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="txtGen" runat="server" TextMode ="SingleLine"></asp:TextBox>
+                        <asp:TextBox ID="txtGen" runat="server" MaxLength="1" ></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -43,8 +43,7 @@
                         <asp:Label ID="lblCountry" runat="server" Text="Pais: "></asp:Label>
                     </td>
                     <td>
-                        <asp:DropDownList ID="DropDownList1" runat="server">
-                        </asp:DropDownList>
+                        <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
                     </td>
 
                 </tr>
@@ -160,7 +159,20 @@
                 </tr>
             </table>
         </div>
-
+                <script type="text/javascript">
+                    function EnableDisableTextBox(chkCintern) {
+                        var txtArea = document.getElementById("txtArea");
+                        var txtOrg = document.getElementById("txtOrg");
+                        txtOrg.disabled = chkCintern.checked ? true : false;
+                        txtArea.disabled = chkCintern.checked ? false : true;
+                        if (!txtArea.disabled) {
+                            txtArea.focus();
+                        }
+                        if (!txtOrg.disable) {
+                            txtOrg.focus();
+                        }
+                    }
+                    </script>
         <div>
             <asp:Button ID="insertContact" runat="server" Text="Guardar" OnClick="SaveContact" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
 

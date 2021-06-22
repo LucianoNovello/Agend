@@ -89,7 +89,7 @@ namespace DAL
 
                     });
         }
-        public SqlDataReader GetContactById(SqlConnection connection, int id)
+        public SqlDataReader GetContactById(SqlConnection connection, int? id)
         {
             SqlCommand cmd = new SqlCommand
             {
@@ -159,7 +159,7 @@ namespace DAL
                           });
               }
 
-        public int ExecuteTransactionD(SqlTransaction transaction, SqlConnection connection, Contact editContact)
+        public int ExecuteTransactionD(SqlTransaction transaction, SqlConnection connection, int id)
         {
             SqlCommand cmd = new SqlCommand
             {
@@ -168,19 +168,19 @@ namespace DAL
                 CommandType = CommandType.StoredProcedure,
                 CommandText = "deleteContact"
             };
-            ParametersD(editContact, cmd);
+            ParametersD(id, cmd);
             int registrosAfectados = cmd.ExecuteNonQuery();
             return registrosAfectados;
-        }
+            }
 
-        private static void ParametersD(Contact C, SqlCommand cmd)
+        private static void ParametersD(int id, SqlCommand cmd)
         {
             cmd.Parameters.Add(new SqlParameter[]
 
                     {
 
 
-                      new SqlParameter() { ParameterName = "@id", Value = C.Id, SqlDbType = SqlDbType.Int }
+                      new SqlParameter() { ParameterName = "@id", Value = id, SqlDbType = SqlDbType.Int }
 
                       
 
@@ -208,7 +208,7 @@ namespace DAL
 
                 new SqlParameter() { ParameterName = "@city",   Value = filter.City,    SqlDbType = SqlDbType.VarChar },
 
-                new SqlParameter() { ParameterName = "@cIntern",   Value = filter.CIntern,    SqlDbType = SqlDbType.Int },
+                new SqlParameter() { ParameterName = "@cIntern",   Value = filter.CIntern,    SqlDbType = SqlDbType.Bit },
 
                 new SqlParameter() { ParameterName = "@org",   Value = filter.Org,    SqlDbType = SqlDbType.VarChar },
 

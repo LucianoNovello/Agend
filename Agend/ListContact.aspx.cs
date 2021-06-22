@@ -19,9 +19,8 @@ namespace Agend
             if (!IsPostBack)
             {
 
-                ContactBusiness contactBusiness = new ContactBusiness();
-                GridView1.DataSource = contactBusiness.GetContacts();
-                GridView1.DataBind();
+            
+                LoadGrid();
             }
 
 
@@ -51,9 +50,28 @@ namespace Agend
         }
         protected void ContactFilter(object sender, EventArgs e)
         {
+            LoadGrid();
 
-            DateTime date = Convert.ToDateTime(String.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTimeText.Text));
+        }
 
+        private void LoadGrid()
+        {
+            int? test = null;
+            if (chkCintern.Checked)
+            {
+                test = 1;
+            }
+            int? testA = null;
+            if (ActiveCheck.Checked)
+            {
+                testA = 1;
+            }
+            DateTime? date = new DateTime();
+
+            if (DateTimeText.Text == "")
+            {
+                date = null;
+            }
 
             ContactBusiness listFilter = new ContactBusiness();
             PaginateProperties properties = new PaginateProperties
@@ -63,34 +81,35 @@ namespace Agend
                 PageSize = 5,
                 SortBy = "secondName"
 
-            }
-;
+            };
             ContactFilter filter = new ContactFilter
             {
-                FirstName = txtFirstName.Text,
-                SecondName = txtSecondName.Text,
-                CIntern = chkCintern.Checked,
-                Org = txtOrg.Text,
-                Area = txtArea.Text,
-                City = txtCity.Text,
-                Country = txtCountry.Text,
-                Active = ActiveCheck.Checked,
-                dateAdmission = date
+
+                FirstName = txtFirstName.Text != "" ? txtFirstName.Text : null,
+
+                SecondName = txtSecondName.Text != "" ? txtSecondName.Text : null,
+                CIntern = test,
+                Org = txtOrg.Text != "" ? txtOrg.Text : null,
+                Area = txtArea.Text != "" ? txtArea.Text : null,
+                City = txtCity.Text != "" ? txtCity.Text : null,
+                Country = txtCountry.Text != "" ? txtCountry.Text : null,
+                Active = testA,
+                dateAdmission = date,
+                PaginateProperties = properties
 
             };
 
+
             GridView1.DataSource = listFilter.GetContactByFilter(filter);
             GridView1.DataBind();
-
-
         }
+
         protected void CleanFilter(object sender, EventArgs e)
         {
 
-            ContactBusiness contactBusiness = new ContactBusiness();
+           
             CleanFilterText();
-            GridView1.DataSource = contactBusiness.GetContacts();
-            GridView1.DataBind();
+            LoadGrid();
 
         }
 
@@ -114,6 +133,16 @@ namespace Agend
             int id = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Values["id"]);
             Response.Redirect("~/ContactForm.aspx?id =" + id);
         }
+        protected void DelectContact(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = GridView1.SelectedRow;
+            int id = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Values["id"]);
+            ContactBusiness contact = new ContactBusiness();
+            contact.DeleteContact(id);
+
+
+        }
+
     }
 }
 

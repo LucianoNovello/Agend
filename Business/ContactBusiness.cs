@@ -18,53 +18,7 @@ namespace Business
 
         }
 
-        public Contact GetContactsById(int id)
-
-        {
-            try
-            {
-                using (ContactDAL dal = new ContactDAL())
-                {
-                    ContactBusiness aux = new ContactBusiness();
-                    Contact contactFilter = new Contact();
-                    var connection = dal.OpenConnection();
-                    var Contact = dal.GetContactById(connection, id);
-                    if (Contact != null)
-                    {
-                        while (Contact.Read())
-                        {
-                            contactFilter.FirstName = Contact.GetString(1);
-                            contactFilter.SecondName = Contact.GetString(2);
-                            contactFilter.Gen = Contact.GetChar(3);
-                            contactFilter.Country = aux.IdCountryToCountryName(Contact.GetInt32(4));
-                            contactFilter.City = Contact.GetString(5);
-                            contactFilter.Intern = Contact.GetBoolean(6);
-                            contactFilter.Org = Contact.GetString(7);
-                            contactFilter.Area = Contact.GetString(8);
-                            contactFilter.DateAdmission = Contact.GetDateTime(9);
-                            contactFilter.Active = Contact.GetBoolean(10);
-                            contactFilter.Direction = Contact.GetString(11);
-                            contactFilter.Phone = Contact.GetString(12);
-                            contactFilter.Cel = Contact.GetString(13);
-                            contactFilter.Email = Contact.GetString(14);
-                            contactFilter.Skype = Contact.GetString(15);
-                        }
-                        return contactFilter;
-
-                    }
-                    else
-                    {
-                        return contactFilter;
-                    }
-                }
-
-            }
-            catch (Exception e)
-            {
-                ExceptionPrint.Print(e);
-                return null;
-            }
-        }
+       
         public void InsertContact(Contact C)
             {
                 using (ContactDAL dal = new ContactDAL())
@@ -89,7 +43,7 @@ namespace Business
                 }
             }
 
-        /*  public void UpdateContact(Contact C)
+          /*public void UpdateContact(Contact C)
           {
               using (ContactDAL dal = new ContactDAL())
               {
@@ -114,9 +68,9 @@ namespace Business
                       transaction.Dispose();
                   }
               }
-          }
+          }*/
 
-          public void DeleteContact(Contact Contact)
+          public void DeleteContact(int id)
           {
               using (ContactDAL dal = new ContactDAL())
               {
@@ -125,7 +79,7 @@ namespace Business
 
                   try
                   {
-                      dal.ExecuteTransactionD(transaction, connection, "");
+                      dal.ExecuteTransactionD(transaction, connection,  id);
 
 
                       transaction.Commit();
@@ -140,56 +94,8 @@ namespace Business
                       transaction.Dispose();
                   }
               }
-          }*/
-        public List<Contact> GetContactsByFilterV2(ContactFilter filter)
-
-        {
-            try
-            {
-                using (ContactDAL dal = new ContactDAL())
-                {
-                    ContactBusiness aux = new ContactBusiness();
-                    List<Contact> listC = new List<Contact>();
-                    Contact contactFilter = new Contact();
-                    var connection = dal.OpenConnection();
-                    var Contact = dal.GetContactByFilterV2(connection, filter);
-                    if (Contact != null)
-                    {
-                        while (Contact.Read())
-                        {
-                            contactFilter.FirstName = Contact.GetString(1);
-                            contactFilter.SecondName = Contact.GetString(2);
-                            contactFilter.Gen = Contact.GetChar(3);
-                            contactFilter.Country = aux.IdCountryToCountryName(Contact.GetInt32(4));
-                            contactFilter.City = Contact.GetString(5);
-                            contactFilter.Intern = Contact.GetBoolean(6);
-                            contactFilter.Org = Contact.GetString(7);
-                            contactFilter.Area = Contact.GetString(8);
-                            contactFilter.DateAdmission = Contact.GetDateTime(9);
-                            contactFilter.Active = Contact.GetBoolean(10);
-                            contactFilter.Direction = Contact.GetString(11);
-                            contactFilter.Phone = Contact.GetString(12);
-                            contactFilter.Cel = Contact.GetString(13);
-                            contactFilter.Email = Contact.GetString(14);
-                            contactFilter.Skype = Contact.GetString(15);
-                            listC.Add(contactFilter);
-                        }
-                        return listC;
-
-                    }
-                    else
-                    {
-                        return listC;
-                    }
-                }
-
-            }
-            catch (Exception e)
-            {
-                ExceptionPrint.Print(e);
-                return null;
-            }
-        }
+          }
+        
             public List<Contact> GetContactByFilter(ContactFilter filter)
         {
             try

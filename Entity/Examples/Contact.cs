@@ -20,7 +20,7 @@ namespace Entity.Examples
 
         public string SecondName { get; set; }
          
-        public char Gen { get; set; }
+        public char? Gen { get; set; }
 
         public string Email { get; set; }
 
@@ -30,7 +30,7 @@ namespace Entity.Examples
 
         public string City { get; set; }
 
-        public Boolean Intern { get; set; }
+        public bool? Intern { get; set; }
 
 
         public string Org {get;set;}
@@ -40,7 +40,7 @@ namespace Entity.Examples
 
         public DateTime? DateAdmission { get; set; }
 
-        public Boolean Active { get; set; }
+        public bool? Active { get; set; }
         
         public string Direction { get; set; }        
         

@@ -11,9 +11,7 @@
     <form id="form1" runat="server" style="background-color: #f1f1f1" >
        
                      
-                     <div>
-                        <asp:Button ID="insertContact" runat="server" Text="Guardar un Contacto" OnClick="ContactInsert" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
-                    </div>
+                     
                 
            <div  runat="server">
 
@@ -116,20 +114,35 @@
                         <asp:TextBox ID ="DateTimeText" runat="server" TextMode="DateTimeLocal"></asp:TextBox>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <div>
+                       
+                             <asp:Button  ID="filterContact" runat="server" Text="Buscar"  OnClick="ContactFilter" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
+                    </div>
+                        
+                    </td>
+                    <td>
+                        <asp:Button ID="insertContact" runat="server" Text="Guardar un Nuevo Contacto" OnClick="ContactInsert" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
+                    </td>
+                </tr>
               </table>
+                        
+
             </div>
                      <p>
-                        <asp:Button  ID="filterContact" runat="server" Text="Hacer lista con filtro"  OnClick="ContactFilter" Width="250px" Height="30px" Font-Size="Larger" BackColor="Green" ForeColor="WhiteSmoke" />
-                     <asp:ImageButton ID="cleanFilter" runat="server" SelectImageUrl="img/clearFilter.png" OnClick="CleanFilter"  />
+                        <asp:ImageButton  ID="cleanFilter" ImageUrl="Img/fil.png" OnClick="CleanFilter"  runat="server" AlternateText="Limpiar Filtro" />
 
                      </p>
                     
                        
                     
          <div id="DivContact" runat="server">
-            <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"  OnSelectedIndexChanged="GridView1_SelectedIndexChanged" DataKeyNames="id" Height="455px" Width="1508px" >
+            <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="false" AutoGenerateColumns="false"  OnSelectedIndexChanged="GridView1_SelectedIndexChanged" DataKeyNames="id"  Height="455px" Width="1508px" >
                 <Columns>
-                    <asp:CommandField ButtonType="Image" ShowSelectButton="True"   SelectImageUrl="Agend/edit.png"  AccessibleHeaderText ="EDITAR" />
+
+                    <asp:CommandField ButtonType="Image" ShowSelectButton="True"   SelectImageUrl="Img/edit.png"  AccessibleHeaderText ="EDITAR" />
+                   
                     <asp:BoundField DataField="id" HeaderText="id" Visible="False" ReadOnly="True" SortExpression="id" />
                     <asp:BoundField DataField="firstName" HeaderText="Nombre" SortExpression="firstName" />
                     <asp:BoundField DataField="secondName" HeaderText="Apellido" SortExpression="secondName" />

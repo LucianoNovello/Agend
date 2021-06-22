@@ -15,8 +15,8 @@ namespace Agend
         {
             if (!IsPostBack)
             {
-                int idContact = Convert.ToInt32(Request.QueryString["id"]);
-                if (idContact >= 0)
+                int? idContact = Convert.ToInt32(Request.QueryString["id"]);
+                if (idContact != null)
                 {
                     EditContact(idContact);
                 }
@@ -57,7 +57,7 @@ namespace Agend
 
 
             }
-        protected void EditContact(int id)
+        protected void EditContact(int? id)
         {
            
             ContactBusiness contact = new ContactBusiness();
