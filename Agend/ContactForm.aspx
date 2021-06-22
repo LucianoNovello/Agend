@@ -103,11 +103,20 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="Localidad" runat="server" Text="Localidad: "></asp:Label>
+                        <asp:Label ID="label44" runat="server" Text="Localidad: "></asp:Label>
 
                     </td>
                     <td>
                         <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                   <tr>
+                    <td>
+                        <asp:Label ID="Label3" runat="server" Text="Direccion: "></asp:Label>
+
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtDir" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

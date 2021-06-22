@@ -31,14 +31,14 @@ namespace DAL
                 return connection;
             }
             catch (Exception e)
-            { 
+            {
                 ExceptionPrint.Print(e);
                 return null;
 
             }
         }
 
-  public int ExecuteTransactionI(SqlTransaction transaction, SqlConnection connection, Contact C)
+        public int ExecuteTransactionI(SqlTransaction transaction, SqlConnection connection, Contact C)
         {
             SqlCommand cmd = new SqlCommand
             {
@@ -47,14 +47,7 @@ namespace DAL
                 CommandType = CommandType.StoredProcedure,
                 CommandText = "insertContact"
             };
-            ParametersI(C, cmd);
-            int registrosAfectados = cmd.ExecuteNonQuery();
-            return registrosAfectados;
-        }
-
-        private static void ParametersI(Contact C, SqlCommand cmd)
-        {
-            cmd.Parameters.Add(new SqlParameter[]
+            cmd.Parameters.AddRange(new SqlParameter[]
 
                     {
 
@@ -65,49 +58,68 @@ namespace DAL
 
                 new SqlParameter() { ParameterName = "@gen", Value = C.Gen, SqlDbType = SqlDbType.Char },
 
-                new SqlParameter() { ParameterName = "@country", Value = C.Country, SqlDbType = SqlDbType.Int },
+                new SqlParameter() { ParameterName = "@idCountry", Value = Convert.ToInt32(C.Country), SqlDbType = SqlDbType.Int },
 
                 new SqlParameter() { ParameterName = "@city", Value = C.City, SqlDbType = SqlDbType.VarChar },
 
-                new SqlParameter() { ParameterName = "@cIntern", Value = C.Intern, SqlDbType = SqlDbType.Int },
+                new SqlParameter() { ParameterName = "@cIntern", Value = C.Intern, SqlDbType = SqlDbType.Bit },
 
                 new SqlParameter() { ParameterName = "@org", Value = C.Org, SqlDbType = SqlDbType.VarChar },
 
                 new SqlParameter() { ParameterName = "@area", Value = C.Area, SqlDbType = SqlDbType.VarChar },
 
-                new SqlParameter() { ParameterName = "@date", Value = C.DateAdmission, SqlDbType = SqlDbType.DateTime },
+                new SqlParameter() { ParameterName = "@dateAdmission", Value = C.DateAdmission, SqlDbType = SqlDbType.DateTime },
 
                 new SqlParameter() { ParameterName = "@active", Value = C.Active, SqlDbType = SqlDbType.Bit },
+                
+                new SqlParameter() { ParameterName = "@direction", Value = C.Direction, SqlDbType = SqlDbType.VarChar },
 
-                new SqlParameter() { ParameterName = "@phone", Value = C.Direction, SqlDbType = SqlDbType.VarChar},
+                new SqlParameter() { ParameterName = "@phone", Value = C.Phone, SqlDbType = SqlDbType.VarChar},
 
-                new SqlParameter() { ParameterName = "@email", Value = C.Org, SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@email", Value = C.Email, SqlDbType = SqlDbType.VarChar },
 
-                new SqlParameter() { ParameterName = "@skype", Value = C.Org, SqlDbType = SqlDbType.VarChar }
+                new SqlParameter() { ParameterName = "@skype", Value = C.Skype, SqlDbType = SqlDbType.VarChar },
+
+                new SqlParameter() { ParameterName = "@cel", Value = C.Cel, SqlDbType = SqlDbType.VarChar }
 
 
 
                     });
+            int registrosAfectados = cmd.ExecuteNonQuery();
+            return registrosAfectados;
+
         }
-        public SqlDataReader GetContactById(SqlConnection connection, int? id)
+    
+        public DataSet GetContactById(SqlConnection connection, int? id)
         {
+            using (SqlDataAdapter adapter = new SqlDataAdapter())
+            {
+                adapter.SelectCommand = ConfigSelectCommandId(connection, id);
+
+                DataSet ds = new DataSet();
+                adapter.Fill(ds);
+
+              
+                return ds;
+            }
+        }
+        private SqlCommand ConfigSelectCommandId(SqlConnection connection, int? id)
+        {
+
             SqlCommand cmd = new SqlCommand
             {
-                Connection = connection,
+                CommandText = "ContactByFilter",
                 CommandType = CommandType.StoredProcedure,
-                CommandText = "GetContactById"
+                Connection = connection
             };
-
             cmd.Parameters.AddRange(new SqlParameter[]
             {
-                new SqlParameter() { ParameterName = "@id",  Value = id,      SqlDbType = SqlDbType.Int }
-            });
+                 new SqlParameter() { ParameterName = "@Id", Value = id, SqlDbType = SqlDbType.Int },
+            }
+            return cmd;
+            }
 
-            SqlDataReader result = cmd.ExecuteReader();
-
-            return result;
-        }
-        public int ExecuteTransactionU(SqlTransaction transaction, SqlConnection connection, Contact editContact)
+        public int ExecuteTransactionU(SqlTransaction transaction, SqlConnection connection, Contact C)
               {
                   SqlCommand cmd = new SqlCommand
                   {
@@ -116,17 +128,13 @@ namespace DAL
                       CommandType = CommandType.StoredProcedure,
                       CommandText = "updateContact"
                   };
-                  ParametersU(editContact, cmd);
-                  int registrosAfectados = cmd.ExecuteNonQuery();
-                  return registrosAfectados;
-              }
 
-              private static void ParametersU(Contact C, SqlCommand cmd)
-              {
-                  cmd.Parameters.Add(new SqlParameter[]
+                     cmd.Parameters.AddRange(new SqlParameter[]
 
-                          {
+                         {
 
+
+                      new SqlParameter() { ParameterName = "@Id", Value = C.Id, SqlDbType = SqlDbType.VarChar },
 
                       new SqlParameter() { ParameterName = "@firstName", Value = C.FirstName, SqlDbType = SqlDbType.VarChar },
 
@@ -150,13 +158,21 @@ namespace DAL
 
                       new SqlParameter() { ParameterName = "@phone", Value = C.Direction, SqlDbType = SqlDbType.VarChar},
 
-                      new SqlParameter() { ParameterName = "@email", Value = C.Org, SqlDbType = SqlDbType.VarChar },
+                      new SqlParameter() { ParameterName = "@email", Value = C.Email, SqlDbType = SqlDbType.VarChar },
 
-                      new SqlParameter() { ParameterName = "@skype", Value = C.Org, SqlDbType = SqlDbType.VarChar }
+                      new SqlParameter() { ParameterName = "@skype", Value = C.Skype, SqlDbType = SqlDbType.VarChar },
+
+                      new SqlParameter() { ParameterName = "@cel", Value = C.Cel, SqlDbType = SqlDbType.VarChar }
 
 
 
-                          });
+                     });
+            int registrosAfectados = cmd.ExecuteNonQuery();
+                  return registrosAfectados;
+              
+
+     
+                 
               }
 
         public int ExecuteTransactionD(SqlTransaction transaction, SqlConnection connection, int id)
@@ -188,45 +204,7 @@ namespace DAL
 
                     });
         }
-        public SqlDataReader GetContactByFilterV2(SqlConnection connection, ContactFilter filter)
-        {
-            SqlCommand cmd = new SqlCommand
-            {
-                Connection = connection,
-                CommandType = CommandType.StoredProcedure,
-                CommandText = "ContactByFilter"
-            };
-
-        cmd.Parameters.AddRange(new SqlParameter[]
-                        {
-
-                new SqlParameter() { ParameterName = "@firstName",     Value = filter.FirstName,      SqlDbType = SqlDbType.VarChar },
-
-                new SqlParameter() { ParameterName = "@secondName",   Value = filter.SecondName,    SqlDbType = SqlDbType.VarChar },
-
-                new SqlParameter() { ParameterName = "@idCountry",   Value = filter.Country,    SqlDbType = SqlDbType.Int },
-
-                new SqlParameter() { ParameterName = "@city",   Value = filter.City,    SqlDbType = SqlDbType.VarChar },
-
-                new SqlParameter() { ParameterName = "@cIntern",   Value = filter.CIntern,    SqlDbType = SqlDbType.Bit },
-
-                new SqlParameter() { ParameterName = "@org",   Value = filter.Org,    SqlDbType = SqlDbType.VarChar },
-
-                new SqlParameter() { ParameterName = "@area",   Value = filter.Area,    SqlDbType = SqlDbType.VarChar },
-
-                new SqlParameter() { ParameterName = "@dateAdmission",   Value = filter.dateAdmission,    SqlDbType = SqlDbType.DateTime },
-
-                new SqlParameter() { ParameterName = "@active",   Value = filter.Active,    SqlDbType = SqlDbType.Bit},
-
-                
-              
-         
-        });
-            SqlDataReader result = cmd.ExecuteReader();
-
-            return result;
-        }
-
+        
         public DataSet GetContactsByFilter(SqlConnection connection, ContactFilter filter)
         {
             using (SqlDataAdapter adapter = new SqlDataAdapter())
@@ -246,6 +224,7 @@ namespace DAL
 
         private SqlCommand ConfigSelectCommand(SqlConnection connection, ContactFilter filter)
         {
+           
             SqlCommand cmd = new SqlCommand
             {
                 CommandText = "ContactByFilter",

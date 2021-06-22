@@ -28,7 +28,7 @@ namespace Business
 
                     try
                     {
-                        dal.ExecuteTransactionI(transaction, connection, C);
+                         dal.ExecuteTransactionI(transaction, connection, C);
                         transaction.Commit();
                     }
                     catch (Exception e)
@@ -43,7 +43,7 @@ namespace Business
                 }
             }
 
-          /*public void UpdateContact(Contact C)
+          public void UpdateContact(Contact C)
           {
               using (ContactDAL dal = new ContactDAL())
               {
@@ -53,7 +53,7 @@ namespace Business
                   try
                   {
 
-                      dal.ExecuteTransactionU(transaction, connection, C.Id);
+                      dal.ExecuteTransactionU(transaction, connection, C);
 
 
                       transaction.Commit();
@@ -68,7 +68,7 @@ namespace Business
                       transaction.Dispose();
                   }
               }
-          }*/
+          }
 
           public void DeleteContact(int id)
           {
@@ -113,7 +113,24 @@ namespace Business
                 return null;
             }
         }
-           
+        public List<Contact> GetContactById(int? id)
+        {
+            try
+            {
+                using (ContactDAL dal = new ContactDAL())
+                {
+                    var connection = dal.OpenConnection();
+                    DataSet ds = dal.GetContactById(connection, id);
+                    return MapDataSetToContacts(ds);
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionPrint.Print(e);
+                return null;
+            }
+        }
+
         private List<Contact> MapDataSetToContacts(DataSet ds)
         {
             List<Contact> list = new List<Contact>();
@@ -135,21 +152,22 @@ namespace Business
         private static Contact MapDataRowToContact(DataRow row)
         {
             ContactBusiness contact = new ContactBusiness();
+         
             return new Contact
             {
                 Id = Convert.ToInt32(row["id"]),
                 FirstName = Convert.ToString(row["firstName"]),
                 SecondName = Convert.ToString(row["secondName"]),
                 DateAdmission = Convert.ToDateTime(row["dateAdmission"]),
-                Gen =  Convert.ToChar(row["gen"]),
+                Gen =  Convert.ToString(row["gen"]),
                 Email = Convert.ToString(row["email"]),
                 Cel = Convert.ToString(row["cel"]),
                 Country = contact.IdCountryToCountryName(Convert.ToInt32(row["idCountry"])),
                 City = Convert.ToString(row["city"]),
-                Intern = Convert.ToBoolean(row["cIntern"]),
-                Org = Convert.ToString(row["org"]),
-                Area = Convert.ToString(row["area"]),
-                Active = Convert.ToBoolean(row["active"]),
+                Intern = Convert.IsDBNull(row["cIntern"]) ? false : Convert.ToBoolean(row["cIntern"]),
+                Org = Convert.IsDBNull(row["org"])? null : Convert.ToString(row["org"]),
+                Area = Convert.IsDBNull(row["area"]) ? null : Convert.ToString(row["area"]),
+                Active = Convert.IsDBNull(row["active"]) ? false : Convert.ToBoolean(row["active"]),
                 Direction= Convert.ToString(row["direction"]),
                 Phone = Convert.ToString(row["phone"]),
                 Skype= Convert.ToString(row["skype"])

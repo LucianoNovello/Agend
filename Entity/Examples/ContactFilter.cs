@@ -17,7 +17,7 @@ namespace Entity.Examples
         public int? CIntern { get; set; }
         public int? Active { get; set; }
 
-        public string Country { get; set; }
+        public int? Country { get; set; }
 
         public string City { get; set; }
         public string Org { get; set; }

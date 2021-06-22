@@ -19,8 +19,9 @@ namespace Agend
             if (!IsPostBack)
             {
 
-            
+
                 LoadGrid();
+            
             }
 
 
@@ -31,15 +32,12 @@ namespace Agend
         }
 
 
-        protected void ContactEdit(object sender, EventArgs e)
+        protected void EditContact(object sender, GridViewEditEventArgs e)
         {
-            int idContact = -1;
-            if (GridView1.SelectedIndex >= 0)
-            {
-                idContact = Convert.ToInt32(ViewState["SelectedKey"]);
-            }
+            GridView1.EditIndex = e.NewEditIndex;
 
-            Response.Redirect(string.Format("ContactForm.aspx?id={0}", idContact));
+            Response.Redirect("ConsultForm.aspx");
+            LoadGrid();
         }
 
 
@@ -48,14 +46,11 @@ namespace Agend
         {
             Response.Redirect("ContactForm.aspx");
         }
-        protected void ContactFilter(object sender, EventArgs e)
-        {
-            LoadGrid();
-
-        }
-
+      
         private void LoadGrid()
         {
+            
+           
             int? test = null;
             if (chkCintern.Checked)
             {
@@ -78,7 +73,7 @@ namespace Agend
             {
                 Order = 1,
                 PageIndex = 0,
-                PageSize = 5,
+                PageSize = 10,
                 SortBy = "secondName"
 
             };
@@ -92,7 +87,7 @@ namespace Agend
                 Org = txtOrg.Text != "" ? txtOrg.Text : null,
                 Area = txtArea.Text != "" ? txtArea.Text : null,
                 City = txtCity.Text != "" ? txtCity.Text : null,
-                Country = txtCountry.Text != "" ? txtCountry.Text : null,
+                Country = (DropDownList1.SelectedIndex)+1,
                 Active = testA,
                 dateAdmission = date,
                 PaginateProperties = properties
@@ -102,47 +97,58 @@ namespace Agend
 
             GridView1.DataSource = listFilter.GetContactByFilter(filter);
             GridView1.DataBind();
+            CountryBusiness countrys = new CountryBusiness();
+            DropDownList1.DataSource = countrys.GetCountrysOnlyName(); ;
+            DropDownList1.DataBind();
         }
 
         protected void CleanFilter(object sender, EventArgs e)
         {
 
+
            
-            CleanFilterText();
             LoadGrid();
+           
 
         }
 
-        protected void CleanFilterText()
-        {
-            txtFirstName.Text = " ";
-            txtSecondName.Text = " ";
-            txtOrg.Text = " ";
-            txtArea.Text = " ";
-            txtCity.Text = " ";
-            txtCountry.Text = " ";
-        }
-        protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
-        {
-            //codigo
-        }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow row = GridView1.SelectedRow;
-            int id = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Values["id"]);
-            Response.Redirect("~/ContactForm.aspx?id =" + id);
-        }
+
         protected void DelectContact(object sender, GridViewDeleteEventArgs e)
         {
             GridViewRow row = GridView1.SelectedRow;
             int id = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Values["id"]);
             ContactBusiness contact = new ContactBusiness();
             contact.DeleteContact(id);
+            LoadGrid();
 
 
         }
 
+        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            int n = e.RowIndex;
+            
+            Contact newContact = new Contact
+            {
+
+                FirstName = txtFirstEditName.Text != " " ? txtFirstEditName.Text : null;
+                SecondName = txtSecondName.Text != "" ? txtSecondName.Text : null,
+                Gen = txtGen.Text != "" ? txtGen.Text : null,
+                Country = Convert.ToString(DropDownList1.SelectedIndex + 1),
+                Intern = test,
+                Org = txtOrg.Text != "" ? txtOrg.Text : null,
+                Area = txtArea.Text != "" ? txtArea.Text : null,
+                City = txtCity.Text != "" ? txtCity.Text : null,
+                Phone = txtPhone.Text != "" ? txtPhone.Text : null,
+                Cel = txtCel.Text != "" ? txtCel.Text : null,
+                Direction = txtDir.Text != "" ? txtDir.Text : null,
+                Email = txtEmail.Text != "" ? txtEmail.Text : null,
+                Skype = txtSkype.Text != "" ? txtSkype.Text : null,
+                Active = testA,
+                DateAdmission = admission,
+            };
+        }
     }
 }
 

@@ -20,7 +20,7 @@ namespace Entity.Examples
 
         public string SecondName { get; set; }
          
-        public char? Gen { get; set; }
+        public string Gen { get; set; }
 
         public string Email { get; set; }
 

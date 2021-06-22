@@ -43,12 +43,12 @@ namespace DAL
             {
                 Connection = connection,
                 CommandType = CommandType.Text,
-                CommandText = "Select*from [country]"
+                CommandText = "Select * from [country]"
             };
             SqlDataReader result = cmd.ExecuteReader();
             return result;
         }
-        public SqlDataReader GetCountryByFilter(SqlConnection connection, int id)
+        public SqlDataReader GetCountryByFilter(SqlConnection connection, int? id)
         {
             SqlCommand cmd = new SqlCommand
             {

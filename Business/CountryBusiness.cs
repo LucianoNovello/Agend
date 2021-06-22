@@ -90,6 +90,42 @@ namespace Business
 
 
         }
+        public List<Country> GetCountrysALL()
+
+        {
+            try
+            {
+                using (CountryDAL dal = new CountryDAL())
+                {
+                    List<Country> listC = new List<Country>();
+                    Country country = null;
+                    var connection = dal.OpenConnection();
+                    var Country = dal.GetAllCountrys(connection);
+                    if (Country != null)
+                    {
+                        while (Country.Read())
+                        {
+                            listC.Add(country);
+                        }
+                        return listC;
+
+                    }
+                    else
+                    {
+                        return listC;
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                ExceptionPrint.Print(e);
+                return null;
+            }
+
+
+
+        }
     }
         
 }
